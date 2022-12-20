@@ -2,17 +2,20 @@ import { createWithApollo } from "./createWithApollo";
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { PaginatedPosts } from "../generated/graphql";
 import { NextPageContext } from "next";
+import { isServer } from "./isServer";
 
 const createClient = (ctx: NextPageContext) =>
   new ApolloClient({
+    credentials: "include",
     //uri: process.env.NEXT_PUBLIC_API_URL as string,
     uri: "http://localhost:4000/graphql",
-    credentials: "include",
+    //uri: ["https://studio.apollographql.com", "http://localhost:4000/graphql"],
     headers: {
       cookie:
         (typeof window === "undefined"
           ? ctx?.req?.headers.cookie
           : undefined) || "",
+      "X-Forwarded-Proto": "https" 
     },
     cache: new InMemoryCache({
       typePolicies: {

@@ -71,8 +71,8 @@ const main = async () => {
             credentials:true
         })
     );
-    // app.set("Access-Control-Allow-Origin", "https://studio.apollographql.com");
-    // app.set("Access-Control-Allow-Credentials", true);
+    app.set("Access-Control-Allow-Origin", "http://localhost:3000");
+    app.set("Access-Control-Allow-Credentials", true);
 
     app.use(
         session({
@@ -85,9 +85,9 @@ const main = async () => {
             cookie: {
                 maxAge: 1000 * 60 * 60 * 24 * 365 * 10, // 10 years
                 httpOnly: true,
-                //sameSite: "none", // csrf lax
-                sameSite: "lax",
-                secure: true // __prod__ // cookie only works in https
+                sameSite: "none", // csrf lax
+                //secure: true // __prod__ // cookie only works in https
+                secure: true
             },
             saveUninitialized: false,
             secret: "kdfsfdsfsdf",

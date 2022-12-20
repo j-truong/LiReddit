@@ -5,6 +5,7 @@ import { Provider, createClient, dedupExchange, fetchExchange } from "urql";
 import { cacheExchange } from "@urql/exchange-graphcache";
 import { LoginMutation, LogoutMutation, MeDocument, MeQuery, PaginatedPosts, RegisterMutation } from '../generated/graphql';
 import { ApolloProvider, InMemoryCache, ApolloClient } from "@apollo/client"
+import { NextPageContext } from 'next';
 
 // const client = new ApolloClient({
 //   //uri: process.env.NEXT_PUBLIC_API_URL as string,
@@ -32,7 +33,7 @@ import { ApolloProvider, InMemoryCache, ApolloClient } from "@apollo/client"
 //   }),
 // })
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps, ctx: NextPageContext) {
   return (
     //<ApolloProvider client={client}>
       <ChakraProvider theme={theme}>

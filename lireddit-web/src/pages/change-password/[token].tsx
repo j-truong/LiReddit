@@ -6,7 +6,7 @@ import { Wrapper } from "../../components/Wrapper";
 import { toErrorMap } from "../../utils/toErrorMap";
 import {Formik, Form} from "formik";
 import { Box, Button, Flex, Link } from "@chakra-ui/react";
-import { useChangePasswordMutation } from "../../generated/graphql";
+import { MeDocument, MeQuery, useChangePasswordMutation } from "../../generated/graphql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { withUrqlClient } from 'next-urql';
 import NextLink from 'next/link';
@@ -26,7 +26,16 @@ export const ChangePassword: NextPage<{token: string}> = () => {
                         newPassword: values.newPassword, 
                         token: 
                             typeof router.query.token === "string" ? router.query.token : "",
-                    }
+                    },
+                    update: (cache, { data }) => {
+                            cache.writeQuery<MeQuery>({
+                                query: MeDocument,
+                                data: {
+                                    __typename: "Query",
+                                    me: data?.changePassword.user,
+                                },
+                            })
+                        }
                 })
 
                 console.log("response", response.data);

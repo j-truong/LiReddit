@@ -37,6 +37,8 @@ const main = async () => {
         origin: ["http://localhost:3000", "https://studio.apollographql.com"],
         credentials: true
     }));
+    app.set("Access-Control-Allow-Origin", "http://localhost:3000");
+    app.set("Access-Control-Allow-Credentials", true);
     app.use((0, express_session_1.default)({
         name: constants_1.COOKIE_NAME,
         store: new RedisStore({
@@ -47,7 +49,7 @@ const main = async () => {
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
             httpOnly: true,
-            sameSite: "lax",
+            sameSite: "none",
             secure: true
         },
         saveUninitialized: false,
